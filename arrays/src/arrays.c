@@ -89,5 +89,14 @@ bool array_deserialize(const char *src_file, void *dst_data,
 
 ssize_t array_locate(const void *data, const void *target,
                      const size_t elem_size, const size_t elem_count) {
-  return 0;
+  if (!data || !target || elem_size == 0 || elem_count == 0) {
+    return -1;
+  }
+
+  for (size_t i = 0; i < elem_count; i++) {
+    if (memcmp(data[i], target, elem_size) == 0) {
+      return i;
+    }
+  }
+  return -1;
 }
