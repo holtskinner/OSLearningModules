@@ -94,7 +94,7 @@ ssize_t array_locate(const void *data, const void *target,
   }
 
   for (size_t i = 0; i < elem_count; i++) {
-    if (memcmp(&data[i], target, elem_size) == 0) {
+    if (memcmp((data + i), target, elem_size) == 0) {
       return i;
     }
   }
