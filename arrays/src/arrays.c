@@ -22,7 +22,15 @@ bool array_copy(const void *src, void *dst, const size_t elem_size, const size_t
 }
 
 bool array_is_equal(const void *data_one, void *data_two, const size_t elem_size, const size_t elem_count) {
+    if (!data_one || !data_two || elem_size == 0 || elem_count == 0) {
+        return false;
+    }
 
+    int result = memcmp(data_one, data_two, (elem_size * elem_count));
+
+    if (result == 0) {
+        return true;
+    }
     return false;
 }
 
