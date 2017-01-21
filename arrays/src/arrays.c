@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #include "../include/arrays.h"
 
@@ -37,7 +38,7 @@ bool array_is_equal(const void *data_one, void *data_two,
 bool array_serialize(const void *src_data, const char *dst_file,
                      const size_t elem_size, const size_t elem_count) {
   // sanity check
-  if (!src_data || !dst_file || dst_file == "" || isspace(dst_file) ||
+  if (!src_data || !dst_file || dst_file[0] == "\0" || isspace(dst_file) ||
       elem_size == 0 || elem_count == 0) {
     return false;
   }
