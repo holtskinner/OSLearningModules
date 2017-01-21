@@ -7,7 +7,7 @@
 // LOOK INTO MEMCPY, MEMCMP, FREAD, and FWRITE
 
 bool array_copy(const void *src, void *dst, const size_t elem_size, const size_t elem_count) {
-    int * test = malloc(5);
+    int *test = malloc(5);
     free(test);
 	return false;
 }
