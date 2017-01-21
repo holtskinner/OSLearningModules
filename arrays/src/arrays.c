@@ -38,7 +38,7 @@ bool array_is_equal(const void *data_one, void *data_two,
 bool array_serialize(const void *src_data, const char *dst_file,
                      const size_t elem_size, const size_t elem_count) {
   // sanity check
-  if (!src_data || !dst_file || dst_file[0] == '\0' || isspace(dst_file[0]) ||
+  if (!src_data || !dst_file || !dst_file[0] || isspace(dst_file[0]) ||
       elem_size == 0 || elem_count == 0) {
     return false;
   }
@@ -65,8 +65,8 @@ bool array_serialize(const void *src_data, const char *dst_file,
 bool array_deserialize(const char *src_file, void *dst_data,
                        const size_t elem_size, const size_t elem_count) {
   // sanity check
-  if (!src_file || !src_file[0] || !dst_data || elem_size == 0 ||
-      elem_count == 0) {
+  if (!src_file || !src_file[0] || isspace(src_file[0]) || !dst_data ||
+      elem_size == 0 || elem_count == 0) {
     return false;
   }
 
