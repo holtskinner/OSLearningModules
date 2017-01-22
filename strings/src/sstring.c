@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "../include/sstring.h"
 
@@ -9,16 +10,15 @@ bool string_valid(const char *str, const size_t length) {
   if (!str || length <= 0 || str[length - 1] != '\0') {
     return false;
   }
-
   return true;
 }
 
 char *string_duplicate(const char *str, const size_t length) {
-  if (!str || length <= 0) {
+  if (!string_valid(str, length)) {
     return NULL;
   }
 
-  char *duplicate = calloc(length, sizeof(char));
+  char *duplicate = malloc(sizeof(char) * length);
 
   if (!strncpy(duplicate, str, length)) {
     return NULL;
@@ -28,7 +28,7 @@ char *string_duplicate(const char *str, const size_t length) {
 }
 
 bool string_equal(const char *str_a, const char *str_b, const size_t length) {
-  if (!str_a || !str_b || length <= 0) {
+  if (!string_valid(str_a, length) || !string_valid(str_b, length)) {
     return false;
   }
 
@@ -55,7 +55,38 @@ int string_tokenize(const char *str, const char *delims,
     return 0;
   }
 
+  // making a copy, because strtok doesn't work with const
+  // char *copy = malloc(sizeof(char) * str_length);
+  // if (!copy) {
+  //   free(copy);
+  //   return -1;
+  // }
+
+  // // char *token = strtok(copy, delims);
+  // // printf("%s", token);
+  // // int i = 0;
+  // // /*while (token && i < requested_tokens) {
+  // //   if (strlen(token) > max_token_length) {
+  // //     return -1;
+  // //   }
+  // //   strcpy(tokens[i], token);
+  // //   token = strtok(NULL, delims);
+  // //   i++;
+  // // }*/
+
+  // free(copy);
   return -1;
 }
 
-bool string_to_int(const char *str, int *converted_value) { return true; }
+bool string_to_int(const char *str, int *converted_value) {
+  if (!str || !converted_value || isspace(str)) {
+    return false;
+  }
+
+  *converted_value = atoi(str);
+
+  if (!converted_value) {
+    return false;
+  }
+  return true;
+}
