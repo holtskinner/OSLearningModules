@@ -48,15 +48,37 @@ bool bitmap_test(const bitmap_t *const bitmap, const size_t bit) {
   }
 
   if (bitmap->data[bit / 8] & (1 << (bit % 8))) {
-    return true;
+    return true;  // bit is 1
   } else {
-    return false;
+    return false;  // bit is zero
   }
 }
 
-size_t bitmap_ffs(const bitmap_t *const bitmap) { return SIZE_MAX; }
+size_t bitmap_ffs(const bitmap_t *const bitmap) {
+  if (!bitmap) {
+    return SIZE_MAX;
+  }
+  size_t i = 0;
+  for (i = 0; i < bitmap->bit_count; i++) {
+    if (bitmap_test(bitmap, i)) {
+      return i;
+    }
+  }
+  return SIZE_MAX;
+}
 
-size_t bitmap_ffz(const bitmap_t *const bitmap) { return SIZE_MAX; }
+size_t bitmap_ffz(const bitmap_t *const bitmap) {
+  if (!bitmap) {
+    return SIZE_MAX;
+  }
+  size_t i = 0;
+  for (i = 0; i < bitmap->bit_count; i++) {
+    if (!bitmap_test(bitmap, i)) {
+      return i;
+    }
+  }
+  return SIZE_MAX;
+}
 
 bool bitmap_destroy(bitmap_t *bitmap) {
   if (!bitmap || !bitmap->data) {
