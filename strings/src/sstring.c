@@ -55,11 +55,11 @@ int string_tokenize(const char *str, const char *delims,
     return 0;
   }
 
-  return -1;
+  return 0;
 }
 
 bool string_to_int(const char *str, int *converted_value) {
-  if (!str || !converted_value || isspace(str)) {
+  if (!str || !converted_value) {
     return false;
   }
 
