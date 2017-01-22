@@ -10,7 +10,7 @@
 bool array_copy(const void *src, void *dst, const size_t elem_size,
                 const size_t elem_count) {
   // sanity check
-  if (!src || !dst || elem_size == 0 || elem_count == 0) {
+  if (!src || !dst || elem_size <= 0 || elem_count <= 0) {
     return false;
   }
   // copy memory and check for NULL
@@ -23,7 +23,7 @@ bool array_copy(const void *src, void *dst, const size_t elem_size,
 bool array_is_equal(const void *data_one, void *data_two,
                     const size_t elem_size, const size_t elem_count) {
   // sanity check
-  if (!data_one || !data_two || elem_size == 0 || elem_count == 0) {
+  if (!data_one || !data_two || elem_size <= 0 || elem_count <= 0) {
     return false;
   }
 
@@ -39,7 +39,7 @@ bool array_serialize(const void *src_data, const char *dst_file,
                      const size_t elem_size, const size_t elem_count) {
   // sanity check
   if (!src_data || !dst_file || !dst_file[0] || isspace(dst_file[0]) ||
-      elem_size == 0 || elem_count == 0) {
+      elem_size <= 0 || elem_count <= 0) {
     return false;
   }
 
@@ -66,7 +66,7 @@ bool array_deserialize(const char *src_file, void *dst_data,
                        const size_t elem_size, const size_t elem_count) {
   // sanity check
   if (!src_file || !src_file[0] || isspace(src_file[0]) || !dst_data ||
-      elem_size == 0 || elem_count == 0) {
+      elem_size <= 0 || elem_count <= 0) {
     return false;
   }
 
@@ -89,7 +89,7 @@ bool array_deserialize(const char *src_file, void *dst_data,
 
 ssize_t array_locate(const void *data, const void *target,
                      const size_t elem_size, const size_t elem_count) {
-  if (!data || !target || elem_size == 0 || elem_count == 0) {
+  if (!data || !target || elem_size <= 0 || elem_count <= 0) {
     return -1;
   }
 
