@@ -55,26 +55,6 @@ int string_tokenize(const char *str, const char *delims,
     return 0;
   }
 
-  // making a copy, because strtok doesn't work with const
-  // char *copy = malloc(sizeof(char) * str_length);
-  // if (!copy) {
-  //   free(copy);
-  //   return -1;
-  // }
-
-  // // char *token = strtok(copy, delims);
-  // // printf("%s", token);
-  // // int i = 0;
-  // // /*while (token && i < requested_tokens) {
-  // //   if (strlen(token) > max_token_length) {
-  // //     return -1;
-  // //   }
-  // //   strcpy(tokens[i], token);
-  // //   token = strtok(NULL, delims);
-  // //   i++;
-  // // }*/
-
-  // free(copy);
   return -1;
 }
 
