@@ -61,25 +61,24 @@ int string_tokenize(const char *str, const char *delims,
 
   int i = 0, j = 0, k = 0;
   for (i = 0; i < str_length; i++) {  // cycle through string
-
-    if (k >= max_token_length) {
-      return -1;
-    }
-
-    if (str[i] == delims[0]) {
-      tokens[j][k] = '\0';
+    if (str[i] == delims[0]) {        // check for delimiter
       j++;
       k = 0;
-    }
-
-    if (j >= requested_tokens || !tokens[j]) {
-      return -1;
+      if (j >= requested_tokens || !tokens[j]) {
+        return -1;
+      }
+      continue;  // skip delimiter and go to next char in string
     }
 
     tokens[j][k] = str[i];
     k++;
+
+    if (k >= max_token_length) {
+      return -1;
+    }
   }
-  return j;
+
+  return requested_tokens;
 }
 
 bool string_to_int(const char *str, int *converted_value) {
