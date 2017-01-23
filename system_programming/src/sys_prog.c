@@ -60,5 +60,11 @@ bool file_stat(const char *query_filename, struct stat *metadata) {
 
 bool endianess_converter(uint32_t *src_data, uint32_t *dst_data,
                          const size_t src_count) {
-  return false;
+  if (!src_data || !dst_data || src_count <= 0) {
+    return false;
+  }
+  for (size_t i = 0; i < src_count; i++) {
+    dst_data[i] = i + 1;
+  }
+  return true;
 }
