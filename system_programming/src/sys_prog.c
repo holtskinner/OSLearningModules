@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <endian.h>
 
 #include "../include/sys_prog.h"
 
