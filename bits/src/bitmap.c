@@ -30,6 +30,7 @@ bool bitmap_set(bitmap_t *const bitmap, const size_t bit) {
   if (!bitmap || bit < 0 || bit > bitmap->bit_count) {
     return false;
   }
+
   bitmap->data[bit / 8] |= 1 << (bit % 8);
   return true;
 }
@@ -38,6 +39,7 @@ bool bitmap_reset(bitmap_t *const bitmap, const size_t bit) {
   if (!bitmap || bit < 0 || bit > bitmap->bit_count) {
     return false;
   }
+
   bitmap->data[bit / 8] &= ~(1 << (bit % 8));
   return true;
 }
@@ -58,12 +60,14 @@ size_t bitmap_ffs(const bitmap_t *const bitmap) {
   if (!bitmap) {
     return SIZE_MAX;
   }
+
   size_t i = 0;
   for (i = 0; i < bitmap->bit_count; i++) {
     if (bitmap_test(bitmap, i)) {
       return i;
     }
   }
+
   return SIZE_MAX;
 }
 
@@ -71,12 +75,14 @@ size_t bitmap_ffz(const bitmap_t *const bitmap) {
   if (!bitmap) {
     return SIZE_MAX;
   }
+
   size_t i = 0;
   for (i = 0; i < bitmap->bit_count; i++) {
     if (!bitmap_test(bitmap, i)) {
       return i;
     }
   }
+
   return SIZE_MAX;
 }
 
