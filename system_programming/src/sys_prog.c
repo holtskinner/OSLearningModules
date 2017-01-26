@@ -1,11 +1,12 @@
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "../include/sys_prog.h"
 
@@ -63,8 +64,11 @@ bool endianess_converter(uint32_t *src_data, uint32_t *dst_data,
   if (!src_data || !dst_data || src_count <= 0) {
     return false;
   }
-  for (size_t i = 0; i < src_count; i++) {
-    dst_data[i] = i + 1;
+
+  int i = 0;
+  for (i = 0; i < src_count; i++) {
+    dst_data[i] = htonl(src_data[i]);
   }
+
   return true;
 }
