@@ -10,7 +10,7 @@ bitmap_t *bitmap_create(size_t n_bits) {
   if (n_bits <= 0) {
     return NULL;
   }
-
+  // allocate bitmap itself
   bitmap_t *bitmap = calloc(n_bits, sizeof(bitmap_t));
 
   if (!bitmap) {
@@ -19,6 +19,7 @@ bitmap_t *bitmap_create(size_t n_bits) {
     return NULL;
   }
 
+  // allocate space for data
   bitmap->data = calloc(n_bits, sizeof(uint8_t));
   bitmap->bit_count = n_bits;
   bitmap->byte_count = ceil(n_bits / 8.0);  // convert bits to bytes
@@ -31,6 +32,7 @@ bool bitmap_set(bitmap_t *const bitmap, const size_t bit) {
     return false;
   }
 
+  // performing or operation with set the bit at the k-th position in A[i]
   bitmap->data[bit / 8] |= 1 << (bit % 8);
   return true;
 }
