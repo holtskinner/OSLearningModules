@@ -26,12 +26,26 @@ int create_blank_records(Record_t **records, const size_t num_records) {
 
 int read_records(const char *input_filename, Record_t *records,
                  const size_t num_records) {
+  if (!input_filename || !records || num_records <= 0) {
+    return -1;
+  }
+
   int fd = open(input_filename, O_RDONLY);
 
-  ssize_t data_read = 0;
-  for (size_t i = 0; i < num_records; ++i) {
-    data_read = read(fd, &records[i], sizeof(Record_t));
+  if (fd == -1) {
+    return -2;
   }
+
+  ssize_t data_read = 0;
+  for (size_t i = 0; i < num_records; i++) {
+    data_read = read(fd, &records[i], sizeof(Record_t));
+    if (data_read == -1) {
+      close(fd);
+      return -3;
+    }
+  }
+
+  close(fd);
   return 0;
 }
 
