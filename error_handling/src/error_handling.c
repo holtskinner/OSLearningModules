@@ -26,7 +26,7 @@ int create_blank_records(Record_t **records, const size_t num_records) {
 
 int read_records(const char *input_filename, Record_t *records,
                  const size_t num_records) {
-  if (!input_filename || !records || num_records <= 0) {
+  if (!input_filename || !records || num_records == 0) {
     return -1;
   }
 
