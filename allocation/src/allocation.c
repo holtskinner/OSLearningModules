@@ -12,32 +12,30 @@ void* allocate_array(size_t member_size, size_t nmember, bool clear) {
   if (clear) {
     ptr = (void*)calloc(nmember, member_size);
   } else {
-    ptr = (void*)malloc(member_size * nmember);
+    ptr = (void*)malloc(nmember * member_size);
   }
 
-  // return null if failed, ptr otherwise
-  return !ptr ? NULL : ptr;
+  // ptr will be NULL if calloc or malloc failed
+  return ptr;
 }
 
 void* reallocate_array(void* ptr, size_t size) {
   if (size <= 0) {
-    free(ptr);
     return NULL;
   }
 
   ptr = (void*)realloc(ptr, size);
 
-  return !ptr ? NULL : ptr;
+  return ptr;
 }
 
 void deallocate_array(void** ptr) {
-  if (!ptr || !*ptr) {
+  if (!ptr) {
     return;
   }
 
   free(*ptr);
   *ptr = NULL;
-  ptr = NULL;
   return;
 }
 
@@ -46,17 +44,24 @@ char* read_line_to_buffer(char* filename) {
     return NULL;
   }
 
-  //   int file = open(filename, O_RDONLY);
+  // Hopefully this is okay, didn't figure out how t read one line with sys
+  // calls
+  FILE* f = fopen(filename, "r");
 
-  //   if (file < 0 || lseek(file, offset, 0) < 0 || read(file, dst, dst_size) <
-  //   0) {
-  //     close(file);
-  //     return false;
-  //   }
+  if (!f) {
+    fclose(f);  // just to be safe
+    return NULL;
+  }
 
-  //   close(file);
+  char* buf = NULL;
+  int i = 0;  // parameter for getline
 
-  // TODO try reading in one byte at a time and realloc
+  // getline should be in stdio
+  if (1 > getline(&buf, &i, f)) {
+    fclose(f);
+    return NULL;
+  }
 
-  return NULL;
+  fclose(f);
+  return buf;
 }
