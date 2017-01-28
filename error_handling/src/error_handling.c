@@ -26,20 +26,25 @@ int create_blank_records(Record_t **records, const size_t num_records) {
 
 int read_records(const char *input_filename, Record_t *records,
                  const size_t num_records) {
-  if (!input_filename || !records || num_records == 0) {
+  if (!input_filename || !records || num_records <= 0) {
     return -1;
+  }
+
+  if (num_records >= 200) {
+    return -3;
   }
 
   int fd = open(input_filename, O_RDONLY);
 
   if (fd == -1) {
+    close(fd);
     return -2;
   }
 
   ssize_t data_read = 0;
   for (size_t i = 0; i < num_records; i++) {
     data_read = read(fd, &records[i], sizeof(Record_t));
-    if (data_read == -1) {
+    if (data_read < 0) {
       close(fd);
       return -3;
     }
@@ -50,8 +55,9 @@ int read_records(const char *input_filename, Record_t *records,
 }
 
 int create_record(Record_t **new_record, const char *name, int age) {
-  if (!new_record || !name || age <= 0 || age > 200 || strlen(name) > 50) {
-    return (-1);
+  if (!new_record || !name || age <= 0 || age > 200 || name[0] == '\n' ||
+      strlen(name) > MAX_NAME_LEN - 1) {
+    return -1;
   }
 
   *new_record = (Record_t *)calloc(1, sizeof(Record_t));
