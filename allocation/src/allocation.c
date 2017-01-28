@@ -53,11 +53,11 @@ char* read_line_to_buffer(char* filename) {
     return NULL;
   }
 
-  char* buf = NULL;
-  int i = 0;  // parameter for getline
+  char* buf = NULL;  // buffer
+  int i = 0;         // parameter for getline
 
   // getline should be in stdio
-  if (1 > getline(&buf, &i, f)) {
+  if (0 > getline(&buf, &i, f)) {
     fclose(f);
     return NULL;
   }
