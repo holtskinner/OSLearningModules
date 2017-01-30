@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include "../include/allocation.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,7 +55,7 @@ char* read_line_to_buffer(char* filename) {
   }
 
   char* buf = NULL;  // buffer
-  int i = 0;         // parameter for getline
+  size_t i = 0;      // parameter for getline
 
   // getline should be in stdio
   if (0 > getline(&buf, &i, f)) {
